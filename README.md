@@ -12,3 +12,20 @@ _____________________________________
 | Command | What the command doing? |
 | ------- | ----------------------- |
 | `!TO BE ADDED` | ETA : UNKWOWN |
+
+
+
+
+
+## How to run the bot
+
+You can run the bot where ever you want, but to make it work you will need to edit one thing in the code!
+
+**Replace "TOKEN" with your bot token.**
+
+```python
+client.run('TOKEN')
+```
+
+------------
+
