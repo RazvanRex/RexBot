@@ -8,10 +8,12 @@ Discord Bot made for multiple things.
 
 ## Commands
 
-_____________________________________
-| Command | What the command doing? |
+
+| Command | Description |
 | ------- | ----------------------- |
-| `!TO BE ADDED` | ETA : UNKWOWN |
+| `!neko` | Sends SFW/NSFW images using the nekos.life api. |
+| `!8ball`| Asks the magic 8ball. |
+| `!ping`| Shows the bot ping. |
 
 
 
@@ -29,7 +31,7 @@ client.run('TOKEN')
 
 ## Contact
 
-IF something is not working you can dm me on discord and i will respond as fast as possible!
+I something is not working you can dm me on discord and i will respond as fast as possible!
 
 Discord: `RazvanRex#7779`
 
