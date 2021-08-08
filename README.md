@@ -27,5 +27,9 @@ You can run the bot where ever you want, but to make it work you will need to ed
 client.run('TOKEN')
 ```
 
-------------
+## Contact
+
+IF something is not working you can dm me on discord and i will respond as fast as possible!
+
+Discord: `RazvanRex#7779`
 
