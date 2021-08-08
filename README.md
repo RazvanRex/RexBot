@@ -1,8 +1,8 @@
-![Written in Python](https://img.shields.io/badge/--orange?logo=python)
+[![](https://img.shields.io/github/languages/top/RazvanRex/RexBot?style=for-the-badge)](https://github/languages/top/RazvanRex/RexBot) 
 
 # RexBot
 
-Discord Bot made for multiple things. I will add a command list later.
+Discord Bot made for multiple things.
 
 ## Commands
 
