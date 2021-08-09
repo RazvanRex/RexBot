@@ -1,8 +1,13 @@
-# Importing the library
+# Importing
 import nekos
 import discord
 from discord.ext import commands
 import random
+import secrets
+import json
+import aiohttp
+
+
 
 
 # prefix
@@ -11,6 +16,8 @@ botPrefix = '!'
 # Bot Stuff
 client = commands.Bot(command_prefix = botPrefix)
 client.remove_command('help')
+
+roger_reaction = '👍'
 
 @client.event
 async def on_ready():
@@ -36,17 +43,16 @@ async def help(ctx):
                                     url='https://github.com/RazvanRex/RexBot', color=0x00ff00)
     helpEmbedVar.set_author(name=ctx.author.display_name, url="https://github.com/RazvanRex/RexBot",
                             icon_url=ctx.author.avatar_url)
-    helpEmbedVar.add_field(name="Images/GIFs:", value="**!neko**: Sends SFW/NSFW images using the `nekos.life` api.", inline=False)
-    helpEmbedVar.add_field(name="Fun:", value="**!8ball**: Ask the magic 8ball!", inline=False)
-    helpEmbedVar.add_field(name="Others:", value="**!ping**: Pong!", inline=False)
+    helpEmbedVar.add_field(name="__ Images/GIFs:__", value="**!neko**: Sends SFW/NSFW images using the `nekos.life` api. \n ""**!giphy <word>**: Searches a gif on giphy with the search term.", inline=False)
+    helpEmbedVar.add_field(name="__Fun:__", value="**!8ball**: Ask the magic 8ball!", inline=False)
+    helpEmbedVar.add_field(name="__Fun:__", value="**!slot**: Try your luck at the slot machine!", inline=False)
+    helpEmbedVar.add_field(name="__Others:__", value="**!ping**: Pong!", inline=False)
+    helpEmbedVar.add_field(name="__Others:__", value="**!password**: Generates a password and sends it into your DM's!", inline=False)
     await ctx.channel.send(embed=helpEmbedVar)
 
 
 
-
-
 # neko command
-
 @client.command()
 @commands.is_nsfw()
 async def neko(ctx, Category):
@@ -79,8 +85,8 @@ async def neko_error(ctx, error):
         await ctx.send(nekos.cat())
         tpvrError = 1
 
-# nekohelp command
 
+# nekohelp command
 @client.command()
 async def nekohelp(ctx):
     """Shows all the valid arguments for the `!neko` command."""
@@ -94,19 +100,14 @@ validNekoArgs = [ 'feet', 'yuri', 'trap', 'futanari', 'hololewd', 'lewdkemo', 's
             'woof' ]
 
 
-# Ping Command
+#Ping Command
 @client.command()
 async def ping(ctx):
     """Pong!"""
     await ctx.send(f'Pong! Time: {round(client.latency * 1000)}ms')
 
 
-# Info command
-#@client.command()
-#async def info(ctx, *, member: discord.user):
-#    """Tells you some info about the member."""
-#    fmt = '{0} joined on {0.joined_at} and has {1} roles.'
-#    await ctx.send(fmt.format(member, len(member.roles)))
+
 
 #8ball command
 @client.command(name="8ball")
@@ -135,6 +136,56 @@ async def _8ball(ctx, *, question):
     await ctx.send(f'You asked the magic ball: {question}?\nIt`s Answer is: {random.choice(responses)}')
 
 
+#slot machine command
+@client.command(aliases=["slots", "bet"])
+async def slot(ctx):
+    """ Try your luck at the slot machine """
+    emojis = "🍎🍊🍐🍋🍉🍓🍒🍇"
+    a = random.choice(emojis)
+    b = random.choice(emojis)
+    c = random.choice(emojis)
+
+    slotmachine = f"**[ {a} {b} {c} ]\n{ctx.author.name}**,"
+
+    if (a == b == c):
+        await ctx.send(f"{slotmachine} All matching, you won!")
+    elif (a == b) or (a == c) or (b == c):
+        await ctx.send(f"{slotmachine} Two in a row, you won!")
+    else:
+        await ctx.send(f"{slotmachine} You lost 😢, better luck next time!")
+
+
+#password generator command
+@client.command()
+async def password(ctx, nbytes: int = 18):
+    """ Generates a random password """
+    if nbytes not in range(3, 1401):
+        return await ctx.send("I only accept any numbers between 3-1400")
+    if hasattr(ctx, "guild") and ctx.guild is not None:
+        await ctx.send(f"I sent you a DM with your password, **{ctx.author.name}**")
+        await ctx.author.send(f"**Here is your password:**\n{secrets.token_urlsafe(nbytes)}")
+
+
+#giphy search command
+@client.command(pass_context=True)
+async def giphy(ctx, *, search):
+    embed = discord.Embed(colour=discord.Colour.blue())
+    session = aiohttp.ClientSession()
+
+    if search == '':
+        response = await session.get('https://api.giphy.com/v1/gifs/random?api_key=API_KEY') #replace API_KEY with your giphy api key
+        data = json.loads(await response.text())
+        embed.set_image(url=data['data']['images']['original']['url'])
+    else:
+        search.replace(' ', '+')
+        response = await session.get('http://api.giphy.com/v1/gifs/search?q=' + search + '&api_key=API_KEY&limit=10') #replace API_KEY with your giphy api key
+        data = json.loads(await response.text())
+        gif_choice = random.randint(0, 9)
+        embed.set_image(url=data['data'][gif_choice]['images']['original']['url'])
+
+    await session.close()
+    await ctx.send(embed=embed)
+
 
 @client.event
 async def on_command_error(ctx, error):
@@ -143,5 +194,6 @@ async def on_command_error(ctx, error):
 
 
 
+
 # token
-client.run("TOKEN")
+client.run("TOKEN") #replace TOKEN with your discord bot token
