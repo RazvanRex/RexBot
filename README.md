@@ -14,6 +14,10 @@ Discord Bot made for multiple things.
 | `!neko` | Sends SFW/NSFW images using the nekos.life api. |
 | `!8ball`| Asks the magic 8ball. |
 | `!ping`| Shows the bot ping. |
+| `!giphy <word>`| Searches a gif on giphy with the search term. |
+| `!password`| Generates a password and sends it into your DM's! |
+| `!slot`| Try your luck at the slot machine! |
+
 
 
 
