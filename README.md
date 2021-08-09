@@ -25,13 +25,15 @@ Discord Bot made for multiple things.
 
 ## How to run the bot
 
-You can run the bot where ever you want, but to make it work you will need to edit one thing in the code!
+You can run the bot where ever you want, but to make it work you will need to edit some things in the code!
 
 **Replace "TOKEN" with your bot token.**
 
 ```python
 client.run('TOKEN')
 ```
+**Also, you need to replace the API_KEY at the giphy command section with your API key. There is more info in the code about this*
+
 
 ## Contact
 
